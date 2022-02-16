@@ -78,8 +78,7 @@ const Button = styled.button`
   display: block;
   width: 12rem;
   text-align: center;
-  margin: 0 auto;
-  margin-top: 3rem;
+  margin: 3rem auto 0;
 
   :hover {
     color: var(--clr-primary-1);

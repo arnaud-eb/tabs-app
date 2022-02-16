@@ -36,9 +36,10 @@ const JobDesc = styled.article`
     margin-bottom: 0;
     color: var(--clr-grey-3);
   }
-  .job-icon {
-    color: var(--clr-primary-5);
-  }
+`;
+
+const Icon = styled(FaAngleDoubleRight)`
+  color: var(--clr-primary-5);
 `;
 
 function JobInfo({ job }: JobInfoProps) {
@@ -50,9 +51,7 @@ function JobInfo({ job }: JobInfoProps) {
       {job.duties.map((duty, index) => {
         return (
           <JobDesc key={index}>
-            <div className="job-icon">
-              <FaAngleDoubleRight />
-            </div>
+            <Icon />
             <p>{duty}</p>
           </JobDesc>
         );
