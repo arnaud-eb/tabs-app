@@ -2,9 +2,11 @@ import * as React from "react";
 import { FaAngleDoubleRight } from "react-icons/fa";
 import styled from "styled-components";
 
+import BtnContainer from "./BtnContainer";
+
 const url = "https://course-api.com/react-tabs-project";
 
-type JobType = {
+export type JobType = {
   id: string;
   order: number;
   title: string;
@@ -12,11 +14,6 @@ type JobType = {
   duties: string[];
   company: string;
 }[];
-
-interface BtnJobProps {
-  index: number;
-  idx: number;
-}
 
 const AppWrapper = styled.main`
   width: 90vw;
@@ -61,60 +58,6 @@ const JobsContainer = styled.section`
     display: grid;
     grid-template-columns: 200px 1fr;
     column-gap: 4rem;
-  }
-`;
-
-const BtnContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  margin-bottom: 4rem;
-  flex-wrap: wrap;
-
-  @media screen and (min-width: 992px) {
-    flex-direction: column;
-    justify-content: flex-start;
-  }
-`;
-
-const BtnJob = styled.button<BtnJobProps>`
-  background: transparent;
-  border-color: transparent;
-  text-transform: capitalize;
-  font-size: 1.25rem;
-  letter-spacing: var(--spacing);
-  margin: 0 0.5rem;
-  transition: var(--transition);
-  cursor: pointer;
-  padding: 0.25rem 0;
-  line-height: 1;
-  outline-color: var(--clr-primary-10);
-
-  :hover {
-    color: var(--clr-primary-5);
-    box-shadow: 0 2px var(--clr-primary-5);
-  }
-
-  ${(p) =>
-    p.index === p.idx &&
-    `
-    color: var(--clr-primary-5);
-    box-shadow: 0 2px var(--clr-primary-5);
-    
-  `}
-
-  @media screen and (min-width: 992px) {
-    margin-bottom: 1rem;
-
-    :hover {
-      box-shadow: -2px 0 var(--clr-primary-5);
-    }
-
-    ${(p) =>
-      p.index === p.idx &&
-      `    
-    box-shadow: -2px 0 var(--clr-primary-5);
-  `}
   }
 `;
 
@@ -211,20 +154,7 @@ const App = () => {
             <h2>experience</h2>
           </Title>
           <JobsContainer>
-            <BtnContainer>
-              {jobs.map((job, idx) => (
-                <BtnJob
-                  key={job.id}
-                  idx={idx}
-                  index={index}
-                  onClick={() => {
-                    setIndex(idx);
-                  }}
-                >
-                  {job.company}
-                </BtnJob>
-              ))}
-            </BtnContainer>
+            <BtnContainer jobs={jobs} index={index} setIndex={setIndex} />
             {job && (
               <JobInfo>
                 <h3>{job.title}</h3>
