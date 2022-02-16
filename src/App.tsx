@@ -13,6 +13,11 @@ type JobType = {
   company: string;
 }[];
 
+interface BtnJobProps {
+  index: number;
+  idx: number;
+}
+
 const AppWrapper = styled.main`
   width: 90vw;
   margin: 5rem auto;
@@ -35,7 +40,10 @@ const Title = styled.div`
   }
 
   h2::after {
+    content: "";
     position: absolute;
+    bottom: -100%;
+    right: calc(50% - 5rem / 2);
     width: 5rem;
     height: 0.25rem;
     margin-bottom: 1.25rem;
@@ -69,7 +77,7 @@ const BtnContainer = styled.div`
   }
 `;
 
-const BtnJob = styled.button`
+const BtnJob = styled.button<BtnJobProps>`
   background: transparent;
   border-color: transparent;
   text-transform: capitalize;
@@ -87,12 +95,26 @@ const BtnJob = styled.button`
     box-shadow: 0 2px var(--clr-primary-5);
   }
 
+  ${(p) =>
+    p.index === p.idx &&
+    `
+    color: var(--clr-primary-5);
+    box-shadow: 0 2px var(--clr-primary-5);
+    
+  `}
+
   @media screen and (min-width: 992px) {
     margin-bottom: 1rem;
 
     :hover {
       box-shadow: -2px 0 var(--clr-primary-5);
     }
+
+    ${(p) =>
+      p.index === p.idx &&
+      `    
+    box-shadow: -2px 0 var(--clr-primary-5);
+  `}
   }
 `;
 
@@ -110,7 +132,7 @@ const JobInfo = styled.div`
   }
 `;
 
-const JobDate = styled.div`
+const JobDate = styled.p`
   letter-spacing: var(--spacing);
 `;
 
@@ -190,8 +212,17 @@ const App = () => {
           </Title>
           <JobsContainer>
             <BtnContainer>
-              {jobs.map((job) => (
-                <BtnJob key={job.id}>{job.company}</BtnJob>
+              {jobs.map((job, idx) => (
+                <BtnJob
+                  key={job.id}
+                  idx={idx}
+                  index={index}
+                  onClick={() => {
+                    setIndex(idx);
+                  }}
+                >
+                  {job.company}
+                </BtnJob>
               ))}
             </BtnContainer>
             {job && (
